@@ -1,0 +1,7 @@
+<table>
+  <tr *ngFor="let todo of todo$ | async ">
+    <td>{{todo.task}}</td>
+    <td><button (click)="delete(todo.id)">X</button></td>
+  </tr>
+</table>
+
