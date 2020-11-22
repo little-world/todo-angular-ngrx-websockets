@@ -13,7 +13,7 @@ export class TodoRestService {
     return this.http.get<Todo[]>('http://localhost:8080/todo')
   }
 
-  save(todo: Todo) {
+  add(todo: Todo) {
     return this.http.post('http://localhost:8080/todo', todo)
   }
 

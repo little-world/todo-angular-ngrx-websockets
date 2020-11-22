@@ -3,7 +3,6 @@ import {select, Store} from "@ngrx/store";
 import {Todo} from "../todo";
 import {Observable} from "rxjs";
 import {requestDeleteAction, requestLoadAction} from "../todo.actions";
-import {TodoWebsocketService} from "../todo-websocket.service";
 
 @Component({
   selector: 'app-todo-list',

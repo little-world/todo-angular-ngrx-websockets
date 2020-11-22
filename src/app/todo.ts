@@ -1,4 +1,4 @@
 export class Todo {
-  id: number
+  id: number;
   task: string;
 }

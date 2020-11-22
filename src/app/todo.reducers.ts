@@ -1,13 +1,6 @@
-import {Action, createReducer, on} from "@ngrx/store";
+import {createReducer, on} from "@ngrx/store";
 import {Todo} from "./todo";
-import {
-  requestAddAction,
-  addActionSuccess,
-  requestDeleteAction,
-  requestLoadAction,
-  loadActionSuccess,
-  deleteActionSuccess
-} from "./todo.actions";
+import {addActionSuccess, deleteActionSuccess, loadActionSuccess} from "./todo.actions";
 
 
 export const initialState: Todo[] = [];

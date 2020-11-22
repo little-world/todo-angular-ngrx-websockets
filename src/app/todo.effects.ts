@@ -1,18 +1,24 @@
-import {map, mergeMap, tap} from "rxjs/operators";
-import {loadActionSuccess, requestAddAction, requestDeleteAction, requestLoadAction} from "./todo.actions";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {
+  addActionSuccess,
+  deleteActionSuccess,
+  loadActionSuccess,
+  requestAddAction,
+  requestDeleteAction,
+  requestLoadAction
+} from "./todo.actions";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Injectable} from "@angular/core";
 import {Todo} from "./todo";
 import {TodoRestService} from "./todo-rest.service";
-import {TodoWebsocketService} from "./todo-websocket.service";
 
 @Injectable()
 export class ToDoEffects {
 
   constructor(
-    private todoServiceWs: TodoWebsocketService,
     private todoService: TodoRestService,
-    private action$: Actions) {}
+    private action$: Actions) {
+  }
 
   loadTodo$ = createEffect(() =>
     this.action$.pipe(
@@ -22,28 +28,32 @@ export class ToDoEffects {
           .pipe(
             map((data: Todo[]) =>
               loadActionSuccess({todos: data})
-      )))))
+            )))))
 
-  addTodoWs$ = createEffect(() =>
+  addTodo$ = createEffect(() =>
     this.action$.pipe(
       ofType(requestAddAction),
-      tap(action =>
-        this.todoServiceWs.add(action.todo)
-      )
-    ),
-   { dispatch: false }
-  )
+      mergeMap(action =>
+        this.todoService.add(action.todo)
+          .pipe(
+            map((data: Todo) =>
+              addActionSuccess({todo: data})
+            )//, catchError(err => addActionFailure({error: err}))
+          ))))
 
-  deleteTodoWs$ = createEffect(() =>
-      this.action$.pipe(
-        ofType(requestDeleteAction),
-        tap(action =>
-          this.todoServiceWs.delete(action.id)
-        )
-      ),
-    { dispatch: false }
-  )
+  deleteTodo$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(requestDeleteAction),
+      mergeMap(action =>
+        this.todoService.delete(action.id)
+          .pipe(
+            map(() =>
+              deleteActionSuccess({id: action.id})
+            )))))
 
+
+  // addTodo$    = createEffect(() => ...
+  // deleteTodo$ = createEffect(() => ...
 
 }
 

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Todo} from "../todo";
-import {select, Store} from "@ngrx/store";
-import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
 import {requestAddAction} from "../todo.actions";
 
 @Component({

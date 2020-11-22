@@ -22,7 +22,6 @@ export const deleteActionSuccess = createAction(
 export const requestLoadAction = createAction(
   '[Todo Component] Load'
 );
-
 export const loadActionSuccess = createAction(
   '[Todo Component] LoadSuccess',
   props<{todos: Todo[]}>()
